@@ -3,7 +3,7 @@ variables:
   # REGISTRY_PASSWORD - secret variable
   # REGISTRY_SERVER - secret variable
   # IMAGE_NAME: ${REGISTRY_SERVER}/proj/${CI_PROJECT_NAME}
-  IMAGE_NAME: hyperd/base:alpine
+  IMAGE_NAME: hyperd/base
 stages:
   - test
   - build
@@ -21,6 +21,6 @@ container:
   script:
     - cd base/alpine
     - buildah bud -t ${IMAGE_NAME}:${CI_COMMIT_SHA} .
-    # - buildah push ${IMAGE_NAME}:${CI_COMMIT_SHA} docker://${IMAGE_NAME}:${CI_COMMIT_SHA}
+    - buildah push ${IMAGE_NAME}:${CI_COMMIT_SHA} docker://${IMAGE_NAME}:${CI_COMMIT_SHA}
   # after_script:
     # - podman logout "${REGISTRY_SERVER}"
