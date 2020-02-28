@@ -3,11 +3,17 @@ variables:
   # REGISTRY_PASSWORD - secret variable
   # REGISTRY_SERVER - secret variable
   IMAGE_NAME: ${REGISTRY_SERVER}/proj/${CI_PROJECT_NAME}
+
+stages:
+  - test
+  - build
+  - publish
+
 container:
   stage: publish
   image: buildah/buildah
-  dependencies:
-    - build
+  # dependencies:
+  #   - build
   before_script:
     - podman version
     - buildah version
@@ -15,5 +21,5 @@ container:
   script:
     - buildah bud -t ${IMAGE_NAME}:${CI_COMMIT_SHA} .
     - buildah push ${IMAGE_NAME}:${CI_COMMIT_SHA} docker://${IMAGE_NAME}:${CI_COMMIT_SHA}
-  after_script:
+  # after_script:
     # - podman logout "${REGISTRY_SERVER}"
