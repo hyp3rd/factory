@@ -22,10 +22,9 @@ change_passwd "$APPLICATION_USER"
 mkdir -p /var/tmp/haproxy/
 
 chown ${APPLICATION_USER}:${APPLICATION_GROUP} /var/lib/haproxy
-# rm -rf  /var/lib/haproxy/stats
+
 touch /var/lib/haproxy/stats
 chown ${APPLICATION_USER}:${APPLICATION_GROUP} /var/lib/haproxy/stats
 
-# rm -rf /var/run/haproxy.pid
 touch /var/run/haproxy.pid
 chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /var/run/haproxy.pid

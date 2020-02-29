@@ -14,7 +14,6 @@ ENV APPLICATION_USER=application \
 COPY conf/ /opt/docker/
 
 RUN set -x \
-    # && apk-install shadow \
     && apk-install haproxy --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
     && docker-run-bootstrap \
     && docker-image-cleanup \
@@ -22,10 +21,8 @@ RUN set -x \
     && chmod +x /opt/docker/provision/entrypoint.d/20-haproxy.sh \
     && chmod +x /opt/docker/bin/service.d/haproxy.sh
 
-RUN /opt/docker/provision/entrypoint.d/20-haproxy.sh
-
 USER ${APPLICATION_USER}
 
-CMD ["/opt/docker/bin/service.d/haproxy.sh"]
+ENTRYPOINT ["/opt/docker/bin/service.d/haproxy.sh"]
 
 EXPOSE 80 443
