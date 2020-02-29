@@ -16,12 +16,12 @@ if [ -d /opt/docker/bin/ ]; then
 fi
 
 # Enable usr-bin executables
-if [ -d /opt/docker/bin/usr-bin ]; then
-    find /opt/docker/bin/usr-bin -type f | while read USR_BIN_FILE; do
-        chmod +x -- "$USR_BIN_FILE"
-        ln -n -f -- "$USR_BIN_FILE" "/usr/local/bin/$(basename "$USR_BIN_FILE")"
-    done
-fi
+# if [ -d /opt/docker/bin/usr-bin ]; then
+#     find /opt/docker/bin/usr-bin -type f | while read USR_BIN_FILE; do
+#         chmod +x -- "$USR_BIN_FILE"
+#         ln -n -f -- "$USR_BIN_FILE" "/usr/local/bin/$(basename "$USR_BIN_FILE")"
+#     done
+# fi
 
 
 globexists() {
