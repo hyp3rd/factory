@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-go-replace --mode=line --regex --regex-backrefs \
-    -s '^([ \t]*access_log)[ \t]*([^\t ;]+)(.*;)$' -r '$1 /docker.stdout $3' \
-    -s '^([ \t]*error_log)[ \t]*([^\t ;]+)(.*;)$' -r '$1 /docker.stderr $3' \
-    --  /opt/docker/etc/haproxy/haproxy.cfg
+# go-replace --mode=line --regex --regex-backrefs \
+#     -s '^([ \t]*local2)[ \t]*([^\t ;]+)(.*;)$' -r '$1 /docker.stdout $3' \
+#     # -s '^([ \t]**local2.)[ \t]*([^\t ;]+)(.*;)$' -r '$1 /docker.stderr $3' \
+#     --  /opt/docker/etc/haproxy/haproxy.cfg
 
 # Clear logs
 rm -rf /var/log/haproxy.log

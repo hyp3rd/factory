@@ -1,6 +1,3 @@
-# Create tmp dir for haproxy
-mkdir -p /var/tmp/haproxy/
-
 # Replace markers
 go-replace \
     -s "<APPLICATION_USER>" -r "$APPLICATION_USER" \
