@@ -6,13 +6,13 @@ shopt -s nullglob
  # Check if current user is root
  #
  ##
-# function rootCheck() {
-#     # Root check
-#     if [ "$(/usr/bin/whoami)" != "root" ]; then
-#         echo "[ERROR] $* must be run as root"
-#         exit 1
-#     fi
-# }
+function rootCheck() {
+    # Root check
+    if [ "$(/usr/bin/whoami)" != "root" ]; then
+        echo "[ERROR] $* must be run as root"
+        exit 1
+    fi
+}
 
 ###
  # Create /docker.stdout and /docker.stderr
@@ -32,8 +32,8 @@ function createDockerStdoutStderr() {
         LOG_STDERR="/proc/$$/fd/2"
     fi
 
-    ln -sf "$LOG_STDOUT" /docker.stdout
-    ln -sf "$LOG_STDERR" /docker.stderr
+    ln -f -s "$LOG_STDOUT" /docker.stdout
+    ln -f -s "$LOG_STDERR" /docker.stderr
 }
 ###
  # Include script directory text inside a file
@@ -67,15 +67,12 @@ function deprecationNotice() {
 }
 
 ###
-# Run "entrypoint" scripts
-##
+ # Run "entrypoint" scripts
+ ##
 function runEntrypoints() {
     ###############
     # Try to find entrypoint
     ###############
-
-    # sanitize input and set task
-    TASK="$(echo $1| sed 's/[^-_a-zA-Z0-9]*//g')"
 
     ENTRYPOINT_SCRIPT="/opt/docker/bin/entrypoint.d/${TASK}.sh"
 
@@ -93,16 +90,16 @@ function runEntrypoints() {
     exit 1
 }
 
-# Run "entrypoint" provisioning
-#
+ # Run "entrypoint" provisioning
+ ##
 function runProvisionEntrypoint() {
     includeScriptDir "/opt/docker/provision/entrypoint.d"
     includeScriptDir "/entrypoint.d"
 }
 
 ###
-# List environment variables (based on prefix)
-##
+ # List environment variables (based on prefix)
+ ##
 function envListVars() {
     if [[ $# -eq 1 ]]; then
         env | grep "^${1}" | cut -d= -f1

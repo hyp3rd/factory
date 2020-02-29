@@ -19,13 +19,15 @@ RUN set -x \
     && chmod +x /usr/local/bin/* \
     && chmod +x /opt/docker/bin/* \
     && apk-install \
-    # supervisor \
+    syslog-ng \
+    supervisor \
     bash \
+    && touch /run/supervisord.sock \
     && docker-run-bootstrap \
     && docker-image-cleanup
 
 ENTRYPOINT ["/entrypoint"]
-# CMD ["supervisord"]
+CMD ["supervisord"]
 
 LABEL org.opencontainers.image.vendor="Hyperd" \
     org.opencontainers.image.url="https://hyperd.sh" \

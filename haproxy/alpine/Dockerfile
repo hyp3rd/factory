@@ -17,9 +17,7 @@ RUN set -x \
     && apk-install haproxy --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
     && docker-run-bootstrap \
     && docker-image-cleanup \
-    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /opt/docker/ \
-    && chmod +x /opt/docker/provision/entrypoint.d/20-haproxy.sh \
-    && chmod +x /opt/docker/bin/service.d/haproxy.sh
+    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /opt/docker/
 
 USER ${APPLICATION_USER}
 
