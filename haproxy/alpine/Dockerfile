@@ -18,17 +18,14 @@ RUN set -x \
     && docker-run-bootstrap \
     && docker-image-cleanup \
     && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /opt/docker/ \
-    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /var/lib/syslog-ng \
     && touch /run/syslog-ng.persist- \
     && touch /run/syslog-ng.pid \
     && touch /run/syslog-ng.ctl \
-    # && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.persist- \
-    # && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.pid \
-    # && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.ctl
-    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/*
+    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /var/lib/syslog-ng \
+    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.persist- \
+    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.pid \
+    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.ctl
 
 USER ${APPLICATION_USER}
-
-# ENTRYPOINT ["/opt/docker/bin/service.d/haproxy.sh"]
 
 EXPOSE 80 443
