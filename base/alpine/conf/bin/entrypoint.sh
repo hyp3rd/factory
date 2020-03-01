@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-if [[ -z "$CONTAINER_UID" ]]; then
-    export CONTAINER_UID="application"
-fi
+set -Eeuo pipefail
+
+# if [[ -z "$CONTAINER_UID" ]]; then
+# export CONTAINER_UID="1000"
+# fi
 
 set -o pipefail  # trace ERR through pipes
 set -o errtrace  # trace ERR through 'time command' and other functions
@@ -11,7 +13,7 @@ set -o errexit   ## set -e : exit the script if any statement returns a non-true
 
 # auto elevate privileges (if container is not started as root)
 # if [[ "$UID" -ne 0 ]]; then
-#     export CONTAINER_UID="$UID"
+# export CONTAINER_UID="$UID"
 #     exec gosu root "$0" "$@"
 # fi
 # remove suid bit on gosu
@@ -25,19 +27,19 @@ TASK="$(echo $1| sed 's/[^-_a-zA-Z0-9]*//g')"
 
 source /opt/docker/bin/config.sh
 
-createDockerStdoutStderr
+# createDockerStdoutStderr
 
-if [[ "$UID" -eq 0 ]]; then
-    # Only run provision if user is root
+# if [[ "$UID" -eq 0 ]]; then
+#     # Only run provision if user is root
 
-    if [ "$TASK" == "supervisord" -o "$TASK" == "noop" ]; then
-        # Visible provisioning
-        runProvisionEntrypoint
-    else
-        # Hidden provisioning
-        runProvisionEntrypoint  > /dev/null
-    fi
+if [ "$TASK" == "supervisord" -o "$TASK" == "noop" ]; then
+    # Visible provisioning
+    runProvisionEntrypoint
+else
+    # Hidden provisioning
+    runProvisionEntrypoint  > /dev/null
 fi
+# fi
 
 #############################
 ## COMMAND

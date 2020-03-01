@@ -47,5 +47,6 @@ execScriptsInPath() {
 # Bootstrap
 execScriptsInPath "/opt/docker/provision/bootstrap.d"
 execScriptsInPath "/opt/docker/provision/build.d"
+execScriptsInPath "/opt/docker/provision/service.d"
 execScriptsInPath "/bootstrap.d"
 execScriptsInPath "/build.d"

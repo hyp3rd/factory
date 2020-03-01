@@ -1,24 +1,6 @@
 #!/usr/bin/env bash
 
-IMAGE_FAMILY=$(docker-image-info family)
-
-# Installation
-case "$IMAGE_FAMILY" in
-    Debian|Ubuntu)
-        apt-install syslog-ng syslog-ng-core
-        ;;
-
-    RedHat)
-        yum-install syslog-ng
-
-        # remove logrotate (not needed for docker)
-        rm -f "/etc/cron.daily/logrotate"
-        ;;
-
-    Alpine)
-        apk-install syslog-ng
-        ;;
-esac
+apk-install syslog-ng
 
 ## Configuration
 SYSLOG_NG_VERSION=$(syslog-ng --version | grep -E -e '^Installer-Version:[ ]+[0-9]+\.[0-9]+' | head -n 1 | awk '{print $2}' | cut -f 1,2 -d .)
