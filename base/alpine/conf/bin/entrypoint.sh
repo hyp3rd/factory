@@ -16,7 +16,7 @@ set -o errexit   ## set -e : exit the script if any statement returns a non-true
 # export CONTAINER_UID="$UID"
 #     exec gosu root "$0" "$@"
 # fi
-# remove suid bit on gosu
+# # remove suid bit on gosu
 # chmod -s /sbin/gosu
 
 trap 'echo sigterm ; exit' SIGTERM

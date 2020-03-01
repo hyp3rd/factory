@@ -19,17 +19,18 @@ RUN set -x \
     && docker-image-cleanup \
     && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /opt/docker/ \
     && touch /run/syslog-ng.persist- \
+    && rm -rf /run/syslog-ng.pid \
     && touch /run/syslog-ng.pid \
+    && rm -rf /run/syslog-ng.ctl \
     && touch /run/syslog-ng.ctl \
     && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /var/lib/syslog-ng \
     && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.persist- \
-    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.pid \
+    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.pid && chmod 640 /run/syslog-ng.pid \
     && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /run/syslog-ng.ctl
 
 USER ${APPLICATION_USER}
 
 EXPOSE 80 443
-
 
 LABEL org.opencontainers.image.vendor="Hyperd" \
     org.opencontainers.image.url="https://hyperd.sh" \

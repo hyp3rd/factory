@@ -38,7 +38,12 @@ build() {
     echo
     echo "build context: ${BASE_DIR}/$1"
     echo
-
+# sudo mkdir -p /private/var/lib/containers
+# sudo chmod -R ugo+rwx /private/var/lib/containers
+    # docker run --privileged \
+    #      --security-opt="seccomp=unconfined" --cap-add=ALL \
+    #     -v /private/var/lib/containers/:/var/lib/containers/:rw,Z \
+    #     -it -v${BASE_DIR}/$1:/build buildah/buildah sh -c "buildah bud --no-cache -t $2 /build/."
     docker build --no-cache -t $2 .
 }
 

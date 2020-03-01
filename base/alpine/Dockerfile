@@ -12,6 +12,7 @@ ENV TERM="xterm" \
     LOG_STDERR=""
 
 COPY docker-image-baselayout/root/usr/local/bin/ /usr/local/bin/
+# COPY docker-image-baselayout/root/sbin/gosu /sbin/gosu
 COPY conf/ /opt/docker/
 
 RUN set -x \
@@ -19,7 +20,6 @@ RUN set -x \
     && chmod +x /usr/local/bin/* \
     && chmod +x /opt/docker/bin/* \
     && apk-install \
-    # syslog-ng \
     supervisor \
     bash \
     && touch /run/supervisord.sock \
