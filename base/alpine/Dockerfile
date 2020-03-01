@@ -19,7 +19,7 @@ RUN set -x \
     && chmod +x /usr/local/bin/* \
     && chmod +x /opt/docker/bin/* \
     && apk-install \
-    syslog-ng \
+    # syslog-ng \
     supervisor \
     bash \
     && touch /run/supervisord.sock \
