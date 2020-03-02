@@ -1,6 +1,6 @@
-#+++++++++++++++++++++++++++++++++++++++
-# Dockerfile for hyperd/base:alpine
-#+++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++
+# Dockerfile for eu.gcr.io/hyperd-containers/alpine
+#++++++++++++++++++++++++++++++++++++++++++++++++++
 
 FROM alpine:latest
 
@@ -31,7 +31,7 @@ ENTRYPOINT ["/entrypoint"]
 CMD ["supervisord"]
 
 LABEL org.opencontainers.image.vendor="Hyperd" \
-    org.opencontainers.image.url="https://hyperd.sh" \
+    org.opencontainers.image.url="eu.gcr.io/hyperd-containers/alpine" \
     org.opencontainers.image.title="Base Alpine Docker Image" \
     org.opencontainers.image.description="A doceker image to build alpine based containers, with supervisored processes." \
     org.opencontainers.image.version="v0.5" \

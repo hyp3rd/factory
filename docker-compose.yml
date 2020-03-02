@@ -2,24 +2,25 @@ version: "3.7"
 
 services:
   nginx:
-    image: nginx:latest
     container_name: nginx
-    expose:
-      - "3000"
-      - "80"
+    image: nginx:latest
     ports:
       - "3000:80"
     networks:
       - haproxynet
+    restart: unless-stopped
   haproxy:
-    image: hyperd/haproxy:alpine
+    container_name: haproxy
+    build:
+      context: ./haproxy/alpine/
+    env_file:
+        - ./haproxy/alpine/haproxy.env
+    image: eu.gcr.io/hyperd-containers/haproxy:latest
     networks:
       - haproxynet
-    expose:
-      - "5000"
     ports:
       - "8443:443"
-      - "5000:5000"
+      - "5000:4000"
     # volumes:
     #   - ./tls:/etc/tls/certs
     depends_on:
@@ -27,12 +28,6 @@ services:
     links:
       - "nginx:nginx"
     restart: unless-stopped
-    # deploy:
-    #   restart_policy:
-    #     condition: unless-stopped
-    #     delay: 5s
-    #     max_attempts: 5
-    #     window: 120s
 networks:
   haproxynet:
     name: haproxy_network

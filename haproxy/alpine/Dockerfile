@@ -1,8 +1,8 @@
-#+++++++++++++++++++++++++++++++++++++++
-# Dockerfile for hyperd/haproxy:alpine
-#+++++++++++++++++++++++++++++++++++++++
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
+# Dockerfile for eu.gcr.io/hyperd-containers/haproxy
+#+++++++++++++++++++++++++++++++++++++++++++++++++++
 
-FROM hyperd/alpine:base
+FROM eu.gcr.io/hyperd-containers/alpine:base
 
 ENV APPLICATION_USER=application \
     APPLICATION_GROUP=application \
@@ -16,7 +16,6 @@ COPY conf/ /opt/docker/
 
 RUN set -x \
     && apk-install haproxy --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main \
-    # && apk-install haproxy \
     && haproxy -v \
     && docker-run-bootstrap \
     && docker-image-cleanup \
@@ -40,7 +39,7 @@ USER ${APPLICATION_USER}
 EXPOSE 80 443
 
 LABEL org.opencontainers.image.vendor="Hyperd" \
-    org.opencontainers.image.url="https://hyperd.sh" \
+    org.opencontainers.image.url="eu.gcr.io/hyperd-containers/haproxy" \
     org.opencontainers.image.title="HAProxy Factory Docker Image" \
     org.opencontainers.image.description="A supervisored HAPRoxy running with unprivileged user." \
     org.opencontainers.image.version="v0.5" \
