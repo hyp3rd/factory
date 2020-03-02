@@ -13,6 +13,7 @@ container:
   before_script:
     - podman version
     - buildah version
+    - echo $GOOGLE_REGISTRY_SERVER
     - echo $GOOGLE_APPLICATION_CREDENTIALS > /tmp/$CI_PIPELINE_ID.json
     - podman login --authfile /tmp/$CI_PIPELINE_ID.json "${GOOGLE_REGISTRY_SERVER}"
   script:
