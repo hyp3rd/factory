@@ -3,6 +3,10 @@ version: "3.7"
 services:
   nginx:
     image: nginx:latest
+    container_name: nginx
+    expose:
+      - "3000"
+      - "80"
     ports:
       - "3000:80"
     networks:
@@ -11,6 +15,8 @@ services:
     image: hyperd/haproxy:alpine
     networks:
       - haproxynet
+    expose:
+      - "5000"
     ports:
       - "8443:443"
       - "5000:5000"
