@@ -15,7 +15,7 @@ container:
     - buildah version
     - echo $GOOGLE_REGISTRY_SERVER
     - echo $GOOGLE_APPLICATION_CREDENTIALS > /tmp/$CI_PIPELINE_ID.json
-    - podman login -u _json_key --password-stdin https://gcr.io < /tmp/$CI_PIPELINE_ID.json
+    - podman login --username _json_key https://gcr.io --password-stdin < /tmp/$CI_PIPELINE_ID.json
     # - cat  /tmp/$CI_PIPELINE_ID.json | podman login --username  --–password-stdin "${GOOGLE_REGISTRY_SERVER}"
   script:
     - cd base/alpine
