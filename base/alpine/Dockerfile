@@ -2,7 +2,7 @@
 # Dockerfile for hyperd/base:alpine
 #+++++++++++++++++++++++++++++++++++++++
 
-FROM alpine:3.9.5
+FROM alpine:latest
 
 ENV TERM="xterm" \
     LANG="C.UTF-8" \
@@ -20,6 +20,7 @@ RUN set -x \
     && chmod +x /usr/local/bin/* \
     && chmod +x /opt/docker/bin/* \
     && apk-install \
+    python3 \
     supervisor \
     bash \
     && touch /run/supervisord.sock \

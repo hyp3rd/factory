@@ -45,6 +45,8 @@ build() {
     #     -v /private/var/lib/containers/:/var/lib/containers/:rw,Z \
     #     -it -v${BASE_DIR}/$1:/build buildah/buildah sh -c "buildah bud --no-cache -t $2 /build/."
     docker build --no-cache -t $2 .
+
+    cd -
 }
 
 build base/alpine ${REGISTRY}/alpine:base
@@ -53,7 +55,9 @@ build haproxy/alpine ${REGISTRY}/haproxy:alpine
 report
 
 run() {
-    docker run -p 80:5000 ${REGISTRY}/haproxy:alpine
+    # docker run -d --name nginx -p 3000:80 nginx:latest
+    # docker run -p 80:5000 ${REGISTRY}/haproxy:alpine
+    /Library/Frameworks/Python.framework/Versions/3.8/bin/docker-compose up
 }
 
 run

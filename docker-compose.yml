@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "3000:80"
+    networks:
+      - haproxynet
+  haproxy:
+    image: hyperd/haproxy:alpine
+    networks:
+      - haproxynet
+    ports:
+      - "8443:443"
+      - "5000:5000"
+    # volumes:
+    #   - ./tls:/etc/tls/certs
+    depends_on:
+      - nginx
+    links:
+      - "nginx:nginx"
+    restart: unless-stopped
+    # deploy:
+    #   restart_policy:
+    #     condition: unless-stopped
+    #     delay: 5s
+    #     max_attempts: 5
+    #     window: 120s
+networks:
+  haproxynet:
+    name: haproxy_network
