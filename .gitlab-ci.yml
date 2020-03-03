@@ -7,10 +7,21 @@ stages:
 
 container:
   stage: publish
-  image: buildah/buildah
+  # image: buildah/buildah
+  image: google/cloud-sdk
   # dependencies:
   #   - build
   before_script:
+    - apt-get update
+    - echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+    - wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_10/Release.key -O Release.key
+    - apt-key add - < Release.key
+    - apt-get update -qq
+    - apt-get -qq -y install buildah
+    - wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_10/Release.key -O- | apt-key add -
+    - echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+    - apt-get update -qq
+    - apt-get -qq -y install podman
     - podman version
     - buildah version
     - echo $GOOGLE_REGISTRY_SERVER
