@@ -1,6 +1,6 @@
 variables:
   # BASE_IMAGE_NAME: ${REGISTRY_SERVER}/alpine
-  BASE_IMAGE_NAME: eu.gcr.io/hyperd-containers/alpine
+  BASE_IMAGE_NAME: hyperd-containers/alpine
 stages:
   - test
   - build
@@ -36,6 +36,6 @@ container:
   script:
     - cd base/alpine
     - buildah bud -t ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} .
-    # - buildah push ${BASE_IMAGE_NAME} docker://${REGISTRY_SERVER}/hyperd-containers:${CI_COMMIT_SHA}
+    - buildah push ${BASE_IMAGE_NAME} docker://${REGISTRY_SERVER}/hyperd-containers:${CI_COMMIT_SHA}
   # after_script:
     # - podman logout "${GOOGLE_REGISTRY_SERVER}"
