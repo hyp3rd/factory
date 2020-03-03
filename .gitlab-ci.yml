@@ -33,8 +33,8 @@ container:
     # - podman login --authfile=/tmp/${CI_PIPELINE_ID}.json https://gcr.io
     # - cat  /tmp/$CI_PIPELINE_ID.json | podman login --username  --–password-stdin "${GOOGLE_REGISTRY_SERVER}"
   script:
-    # - cd base/alpine
-    - buildah bud -t ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} ./base/alpine
-    - buildah push ${BASE_IMAGE_NAME} docker://${REGISTRY_SERVER}/hyperd-containers:${CI_COMMIT_SHA}
+    - cd base/alpine
+    - buildah bud -t ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} .
+    # - buildah push ${BASE_IMAGE_NAME} docker://${REGISTRY_SERVER}/hyperd-containers:${CI_COMMIT_SHA}
   # after_script:
     # - podman logout "${GOOGLE_REGISTRY_SERVER}"
