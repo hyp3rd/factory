@@ -1,5 +1,6 @@
 variables:
-  BASE_IMAGE_NAME: ${REGISTRY_SERVER}/alpine
+  # BASE_IMAGE_NAME: ${REGISTRY_SERVER}/alpine
+  BASE_IMAGE_NAME: eu.gcr.io/hyperd-containers/alpine
 stages:
   - test
   - build
