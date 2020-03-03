@@ -19,22 +19,22 @@ container:
     - apt-key add - < Release.key
     - apt-get update -qq
     - apt-get -qq -y install buildah
-    - wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_10/Release.key -O- | apt-key add -
-    - echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
-    - apt-get update -qq
-    - apt-get -qq -y install podman
-    - podman version
+    # - wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_10/Release.key -O- | apt-key add -
+    # - echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+    # - apt-get update -qq
+    # - apt-get -qq -y install podman
+    # - podman version
     - buildah version
-    - echo $GOOGLE_REGISTRY_SERVER
-    - echo $GOOGLE_APPLICATION_CREDENTIALS
-    - echo $GOOGLE_APPLICATION_CREDENTIALS > /tmp/${CI_PIPELINE_ID}.json
-    - export REGISTRY_AUTH_FILE=/tmp/${CI_PIPELINE_ID}.json
-    - podman login --help
-    - podman login --authfile=/tmp/${CI_PIPELINE_ID}.json https://gcr.io
+    - gcloud auth configure-docker -q
+    # - echo $GOOGLE_REGISTRY_SERVER
+    # - echo $GOOGLE_APPLICATION_CREDENTIALS > /tmp/${CI_PIPELINE_ID}.json
+    # - export REGISTRY_AUTH_FILE=/tmp/${CI_PIPELINE_ID}.json
+    # - podman login --help
+    # - podman login --authfile=/tmp/${CI_PIPELINE_ID}.json https://gcr.io
     # - cat  /tmp/$CI_PIPELINE_ID.json | podman login --username  --–password-stdin "${GOOGLE_REGISTRY_SERVER}"
   script:
     - cd base/alpine
-    - buildah bud -t ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} base/alpine
+    - buildah bud -t ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} ./base/alpine
     - buildah push ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} docker://${BASE_IMAGE_NAME}:${CI_COMMIT_SHA}
-  after_script:
-    - podman logout "${GOOGLE_REGISTRY_SERVER}"
+  # after_script:
+    # - podman logout "${GOOGLE_REGISTRY_SERVER}"
