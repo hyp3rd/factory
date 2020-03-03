@@ -1,6 +1,6 @@
 variables:
   # BASE_IMAGE_NAME: ${REGISTRY_SERVER}/alpine
-  BASE_IMAGE_NAME: hyperd-containers/alpine
+  BASE_IMAGE_NAME: alpine
 stages:
   - test
   - build
