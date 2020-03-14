@@ -35,6 +35,9 @@ gcloud_setup () {
   else
     gcloud iam service-accounts create hyperd --display-name "hyperd"
     gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:hyperd@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/owner"
+  fi
+
+  if [[ ! -e $PWD/secrets/gcloud/key.json ]]; then
     gcloud iam service-accounts keys create $PWD/secrets/gcloud/key.json --iam-account hyperd@$PROJECT_ID.iam.gserviceaccount.com
   fi
 

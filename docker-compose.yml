@@ -4,8 +4,8 @@ services:
   nginx:
     container_name: nginx
     image: nginx:latest
-    ports:
-      - "3000:80"
+    # ports:
+    #   - "3000:80"
     networks:
       - haproxynet
     restart: unless-stopped
