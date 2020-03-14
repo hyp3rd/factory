@@ -26,9 +26,10 @@ container:
     # - apt-get -qq -y install podman
     # - podman version
     - buildah version
-    - echo $GCLOUD_KEY > /tmp/${CI_PIPELINE_ID}.json
+    - echo $GCLOUD_KEY | base64 -D > /tmp/${CI_PIPELINE_ID}.json
     - export GOOGLE_APPLICATION_CREDENTIALS=/tmp/${CI_PIPELINE_ID}.json
     - gcloud auth configure-docker -q
+    - gcloud config set account hyperd 
     # - echo $GOOGLE_REGISTRY_SERVER
     # - podman login --help
     # - podman login --authfile=/tmp/${CI_PIPELINE_ID}.json https://gcr.io
