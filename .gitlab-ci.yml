@@ -38,6 +38,6 @@ container:
   script:
     - cd base/alpine
     - buildah bud -t ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} .
-    - buildah push ${BASE_IMAGE_NAME} docker://eu.gcr.io/hyperd-containers:${CI_COMMIT_SHA}
+    - buildah push ${BASE_IMAGE_NAME}:${CI_COMMIT_SHA} docker://eu.gcr.io/hyperd-containers
   # after_script:
     # - podman logout "${GOOGLE_REGISTRY_SERVER}"
