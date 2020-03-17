@@ -1,5 +1,5 @@
 # HAProxy
 
-**BASE IMAGE**: [Base/Alpine](../../base/alpine/README.md)
+**BASE IMAGE**: [Base/Centos](../../base/centos/README.md)
 
-**ENTRYPOINT**: [supervisord](../../base/alpine/conf/bin/entrypoint.d/supervisord.sh)
+**ENTRYPOINT**: ["python3"]
