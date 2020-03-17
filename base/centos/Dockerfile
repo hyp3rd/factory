@@ -19,8 +19,8 @@ RUN set -x \
     && chmod +x /opt/docker/bin/* \
     && yum-upgrade \
     && yum-install \
-        wget \
-        gnupg2 \
+        # wget \
+        # gnupg2 \
         epel-release \
         ca-certificates \
     && docker-run-bootstrap \

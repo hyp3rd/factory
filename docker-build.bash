@@ -73,7 +73,7 @@ build_docker_images () {
   # build base/debian ${REGISTRY}/$PROJECT_ID/debian:bullseye-slim
   # build haproxy/alpine ${REGISTRY}/$PROJECT_ID/haproxy:latest
   # build buildah/debian ${REGISTRY}/$PROJECT_ID/buildah:bullseye-slim
-  # build python3/alpine ${REGISTRY}/$PROJECT_ID/python3:latest
+  build python3/alpine ${REGISTRY}/$PROJECT_ID/python3:latest
 
   # configure pushing to private GCR, and push our image
   gcloud auth configure-docker -q
@@ -84,7 +84,7 @@ build_docker_images () {
   # docker push ${REGISTRY}/$PROJECT_ID/debian:bullseye-slim
   # docker push ${REGISTRY}/$PROJECT_ID/haproxy:latest
   # docker push ${REGISTRY}/$PROJECT_ID/buildah:bullseye-slim
-  # docker push ${REGISTRY}/$PROJECT_ID/python3:latest
+  docker push ${REGISTRY}/$PROJECT_ID/python3:latest
 }
 
 init() {
