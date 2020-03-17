@@ -40,7 +40,7 @@ EXPOSE 80 443
 
 LABEL org.opencontainers.image.vendor="Hyperd" \
     org.opencontainers.image.url="eu.gcr.io/hyperd-containers/haproxy" \
-    org.opencontainers.image.title="HAProxy Factory Docker Image" \
+    org.opencontainers.image.title="HAProxy by Containers Image Factory" \
     org.opencontainers.image.description="A supervisored HAPRoxy running with unprivileged user." \
     org.opencontainers.image.version="v0.5" \
     org.opencontainers.image.documentation="README.md"
