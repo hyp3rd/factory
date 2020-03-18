@@ -4,22 +4,37 @@
 
 FROM eu.gcr.io/hyperd-containers/centos:base
 
-ENV APPLICATION_USER=application \
-    APPLICATION_GROUP=application \
-    APPLICATION_UID=1000 \
-    APPLICATION_GID=1000
-
 COPY conf/ /opt/docker/
 
 RUN set -x \
-    && yum-install python3 \
+    && yum-install \
+        make \
+        gcc \
+        zlib-devel \
+        bzip2-devel \
+        openssl-devel \
+        ncurses-devel \
+        sqlite-devel \
+        readline-devel \
+        tk-devel \
+        gdbm-devel \
+        xz-devel \
+        libffi-devel \
+    && curl https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tgz -o Python-3.8.2.tgz \
+    && tar xzf Python-3.8.2.tgz \
+    && cd Python-3.8.2 \
+    && ./configure --enable-optimizations \
+    && make altinstall -j6 \
+    && cd - \
+    && rm -rf Python-3.8.2.tgz Python-3.8.2 \
+    && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+    && python3.8 get-pip.py \
+    && rm -rf get-pip.py \
     && pip3 install --upgrade pip \
+    && pip3 install venvctl \
     && docker-run-bootstrap \
-    && docker-image-cleanup \
-    && chown -R ${APPLICATION_USER}:${APPLICATION_GROUP} /opt/docker/
+    && docker-image-cleanup
 
-
-# USER ${APPLICATION_USER}
 
 CMD ["python3"]
 
