@@ -74,7 +74,7 @@ build_docker_images () {
   build haproxy/alpine ${REGISTRY}/$PROJECT_ID/haproxy:latest
   build buildah/debian ${REGISTRY}/$PROJECT_ID/buildah:bullseye-slim
   build python3/alpine ${REGISTRY}/$PROJECT_ID/python3:alpine
-  build python3/centos-dev ${REGISTRY}/$PROJECT_ID/python3:centos-dev
+  build python3/centos-dev ${REGISTRY}/$PROJECT_ID/python:3.6.8
 
   # configure pushing to private GCR, and push our image
   gcloud auth configure-docker -q
@@ -86,7 +86,7 @@ build_docker_images () {
   docker push ${REGISTRY}/$PROJECT_ID/haproxy:latest
   docker push ${REGISTRY}/$PROJECT_ID/buildah:bullseye-slim
   docker push ${REGISTRY}/$PROJECT_ID/python3:alpine
-  docker push ${REGISTRY}/$PROJECT_ID/python3:centos-dev
+  docker push ${REGISTRY}/$PROJECT_ID/python:3.6.8
 }
 
 init() {
