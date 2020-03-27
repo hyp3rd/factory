@@ -1,5 +1,5 @@
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Dockerfile for eu.gcr.io/hyperd-containers/python:3.6.8
+# Dockerfile for eu.gcr.io/hyperd-containers/venv-builder
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 FROM eu.gcr.io/hyperd-containers/centos:base
@@ -7,6 +7,7 @@ FROM eu.gcr.io/hyperd-containers/centos:base
 COPY conf/ /opt/docker/
 
 RUN set -x \
+    && yum-upgrade \
     && yum-install \
         make \
         gcc \
@@ -20,12 +21,15 @@ RUN set -x \
         gdbm-devel \
         xz-devel \
         libffi-devel \
+        python2-devel \
         python3-devel \
         openldap-devel \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python3 get-pip.py \
     && rm -rf get-pip.py \
-    && pip3 install venvctl==1.2.4 psutil==5.7.0 \
+    && pip3 install venvctl==1.3.8 psutil==5.7.0 \
+    && pip2 install --upgrade pip==20.0.2 \
+    && pip2 install virtualenv==20.0.15 \
     && docker-run-bootstrap \
     && docker-image-cleanup
 
@@ -33,8 +37,8 @@ RUN set -x \
 CMD ["python3"]
 
 LABEL org.opencontainers.image.vendor="Hyperd" \
-    org.opencontainers.image.url="eu.gcr.io/hyperd-containers/python3:centos" \
-    org.opencontainers.image.title="python3 on CentoOS by Containers Image Factory" \
-    org.opencontainers.image.description="A simple python3 runninng with unprivileged user." \
-    org.opencontainers.image.version="v0.5" \
+    org.opencontainers.image.url="eu.gcr.io/hyperd-containers/venv-builder" \
+    org.opencontainers.image.title="virtual envs builder based on CentoOS Container Image" \
+    org.opencontainers.image.description="A virtual envs builder leveraging both Python 3 and Python 2" \
+    org.opencontainers.image.version="v1.0.0" \
     org.opencontainers.image.documentation="README.md"
