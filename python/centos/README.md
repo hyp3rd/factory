@@ -14,7 +14,7 @@ The **venv-builder** image is engineered to build virtual environments able to s
 
 The container is built from **CentOS** including a the necessary set of packages to allow building the virtual environments both leveraging python 2 and python 3.
 
-```Dockerfile
+```bash
 # ...
 RUN set -x \
     && yum-upgrade \
