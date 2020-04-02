@@ -37,7 +37,7 @@ RUN set -x \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python3 get-pip.py \
     && rm -rf get-pip.py \
-    && pip3 install venvctl==1.3.7 psutil==5.7.0 \
+    && pip3 install venvctl==1.3.9 psutil==5.7.0 \
     && pip2 install --upgrade pip==20.0.2 \
     && pip2 install virtualenv==20.0.15 \
     && docker-run-bootstrap \
@@ -52,7 +52,7 @@ docker run -it --rm -v $(pwd)/conf.json:/opt/conf.json \
   -v $(pwd)/venvs:/opt/venvs:rw \
   eu.gcr.io/hyperd-containers/venv-builder:latest venvctl generate \
   --config /opt/conf.json \
-  --out /opt/venvs \
+  --out /opt/venvs
 ```
 
 Example command to build virtual environments in batch, shipping Python 2.7.16:
