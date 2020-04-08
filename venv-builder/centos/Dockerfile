@@ -5,6 +5,7 @@
 FROM eu.gcr.io/hyperd-containers/centos:base
 
 COPY conf/ /opt/docker/
+COPY tests/ /opt/docker/tests
 
 RUN set -x \
     && yum-upgrade \
@@ -27,14 +28,11 @@ RUN set -x \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python3 get-pip.py \
     && rm -rf get-pip.py \
-    && pip3 install venvctl==1.3.9 psutil==5.7.0 \
-    && pip2 install --upgrade pip==20.0.2 \
-    && pip2 install virtualenv==20.0.15 \
+    && python3 -m pip install venvctl==1.3.16 psutil==5.7.0 \
+    && python2 -m pip install --upgrade pip==20.0.2 \
+    && python2 -m pip install virtualenv==20.0.15 \
     && docker-run-bootstrap \
     && docker-image-cleanup
-
-
-CMD ["python3"]
 
 LABEL org.opencontainers.image.vendor="Hyperd" \
     org.opencontainers.image.url="eu.gcr.io/hyperd-containers/venv-builder" \

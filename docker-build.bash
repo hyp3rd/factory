@@ -21,7 +21,7 @@ validate_env () {
 }
 
 gcloud_setup () {
-  gcloud config set project ${PROJECT_ID}
+  gcloud config set project "${PROJECT_ID}"
     # implicitly enable the apis we'll use
   gcloud services enable storage-api.googleapis.com
   gcloud services enable cloudresourcemanager.googleapis.com
@@ -34,11 +34,11 @@ gcloud_setup () {
     echo "service-accounts: hyperd@$PROJECT_ID.iam.gserviceaccount.com"
   else
     gcloud iam service-accounts create hyperd --display-name "hyperd"
-    gcloud projects add-iam-policy-binding $PROJECT_ID --member "serviceAccount:hyperd@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/owner"
+    gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:hyperd@$PROJECT_ID.iam.gserviceaccount.com" --role "roles/owner"
   fi
 
   if [[ ! -e $PWD/secrets/gcloud/key.json ]]; then
-    gcloud iam service-accounts keys create $PWD/secrets/gcloud/key.json --iam-account hyperd@$PROJECT_ID.iam.gserviceaccount.com
+    gcloud iam service-accounts keys create "$PWD"/secrets/gcloud/key.json --iam-account hyperd@"$PROJECT_ID".iam.gserviceaccount.com
   fi
 
   # make the key available in this session
@@ -62,19 +62,19 @@ build() {
     echo "build context: ${BASE_DIR}/$1"
     echo
 
-    docker build --no-cache -t $2 ${BASE_DIR}/$1/
+    docker build --no-cache -t "$2" "${BASE_DIR}"/"$1"/
 }
 
 
 build_docker_images () {
 
-  build base/alpine ${REGISTRY}/$PROJECT_ID/alpine:base
-  build base/centos ${REGISTRY}/$PROJECT_ID/centos:base
-  build base/debian ${REGISTRY}/$PROJECT_ID/debian:bullseye-slim
-  build haproxy/alpine ${REGISTRY}/$PROJECT_ID/haproxy:latest
-  build buildah/debian ${REGISTRY}/$PROJECT_ID/buildah:bullseye-slim
-  build python/alpine ${REGISTRY}/$PROJECT_ID/python3:alpine
-  build python/centos ${REGISTRY}/$PROJECT_ID/venv-builder:latest
+  build base/alpine "${REGISTRY}/$PROJECT_ID"/alpine:base
+  build base/centos "${REGISTRY}/$PROJECT_ID"/centos:base
+  build base/debian "${REGISTRY}/$PROJECT_ID"/debian:bullseye-slim
+  build haproxy/alpine "${REGISTRY}/$PROJECT_ID"/haproxy:latest
+  build buildah/debian "${REGISTRY}/$PROJECT_ID"/buildah:bullseye-slim
+  build python/alpine "${REGISTRY}/$PROJECT_ID"/python3:alpine
+  build venv-builder/centos "${REGISTRY}/$PROJECT_ID"/venv-builder:latest
   build molecule/alpine "${REGISTRY}/$PROJECT_ID"/molecule:latest
   # configure pushing to private GCR, and push our image
   gcloud auth configure-docker -q
