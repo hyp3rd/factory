@@ -1,0 +1,59 @@
+---
+- name: Scaffold New Open Container Image
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+
+  vars:
+    oci_is_base: false
+    oci_registry: "eu.gcr.io/hyperd-containers"
+    oci_vedor: "F."
+    oci_base_image: "alpine"
+    oci_base_tag: "latest"
+    oci_image_name: "molecule"
+    oci_image_layout_path: ./skel/container-image-baselayout
+    oci_base_image_conf_base: ./skel/conf-base
+    oci_base_image_conf_image: ./skel/conf-image
+    oci_description: "An Alpine based {{ oci_image_name }} running with unprivileged user"
+    oci_version: "0.5.0"
+    oci_documentation: "README.md"
+    oci_container_image_path: "./{{ oci_image_name }}/{{ oci_base_image }}"
+
+  tasks:
+    - name: create the container's image folder
+      file: 
+        path: "{{ oci_container_image_path }}"
+        state: directory
+        recurse: true
+
+    - block:
+      - name: copy the container base layout
+        copy:
+          src: "{{ oci_image_layout_path }}"
+          dest: "{{ oci_container_image_path }}/"
+
+      - name: copy the base conf folder
+        copy:
+          src: "{{ oci_base_image_conf_base }}/"
+          dest: "{{ oci_container_image_path }}/conf"
+
+      when: oci_is_base
+
+    - name: copy the base conf folder
+      copy:
+        src: "{{ oci_base_image_conf_image }}/"
+        dest: "{{ oci_container_image_path }}/conf"
+      when: not oci_is_base
+
+    - name: bump version
+      template:
+        src: ./skel/VERSION.j2
+        dest: "{{ oci_container_image_path }}/conf/VERSION"
+      tags:
+        - version
+
+    - name: provision the Dockerfile
+      template:
+        src: ./skel/Dockerfile.j2
+        dest: "{{ oci_container_image_path }}/Dockerfile"

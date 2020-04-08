@@ -75,18 +75,19 @@ build_docker_images () {
   build buildah/debian ${REGISTRY}/$PROJECT_ID/buildah:bullseye-slim
   build python/alpine ${REGISTRY}/$PROJECT_ID/python3:alpine
   build python/centos ${REGISTRY}/$PROJECT_ID/venv-builder:latest
-
+  build molecule/alpine "${REGISTRY}/$PROJECT_ID"/molecule:latest
   # configure pushing to private GCR, and push our image
   gcloud auth configure-docker -q
 
   # push all the images
-  docker push ${REGISTRY}/$PROJECT_ID/alpine:base
-  docker push ${REGISTRY}/$PROJECT_ID/centos:base
-  docker push ${REGISTRY}/$PROJECT_ID/debian:bullseye-slim
-  docker push ${REGISTRY}/$PROJECT_ID/haproxy:latest
-  docker push ${REGISTRY}/$PROJECT_ID/buildah:bullseye-slim
-  docker push ${REGISTRY}/$PROJECT_ID/python3:alpine
-  docker push ${REGISTRY}/$PROJECT_ID/venv-builder:latest
+  docker push "${REGISTRY}/$PROJECT_ID"/alpine:base
+  docker push "${REGISTRY}/$PROJECT_ID"/centos:base
+  docker push "${REGISTRY}/$PROJECT_ID"/debian:bullseye-slim
+  docker push "${REGISTRY}/$PROJECT_ID"/haproxy:latest
+  docker push "${REGISTRY}/$PROJECT_ID"/buildah:bullseye-slim
+  docker push "${REGISTRY}/$PROJECT_ID"/python3:alpine
+  docker push "${REGISTRY}/$PROJECT_ID"/venv-builder:latest
+  docker push "${REGISTRY}/$PROJECT_ID"/molecule:latest
 }
 
 init() {

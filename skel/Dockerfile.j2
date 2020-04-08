@@ -1,0 +1,23 @@
+{% if oci_is_base %}
+FROM {{ oci_base_image }}:{{ oci_base_tag }}
+
+ENV TERM="xterm" \
+    LANG="C.UTF-8" \
+    LC_ALL="C.UTF-8" \
+    DOCKER_CONF_HOME=/opt/container/ \
+    LOG_STDOUT="" \
+    LOG_STDERR=""
+
+COPY {{ oci_image_layout_path | basename }}/root/usr/local/bin/ /usr/local/bin/
+{% else %}
+FROM {{ oci_registry }}/{{ oci_image_name }}:{{ oci_base_image }}
+{% endif %}
+
+COPY conf/ /opt/container/
+
+LABEL org.opencontainers.image.vendor="{{ oci_vedor }}" \
+    org.opencontainers.image.url="{{ oci_registry }}/{{ oci_image_name }}" \
+    org.opencontainers.image.title="{{ oci_image_name }} by Containers Image Factory" \
+    org.opencontainers.image.description="{{ oci_description }}" \
+    org.opencontainers.image.version="{{ oci_version }}" \
+    org.opencontainers.image.documentation="{{ oci_documentation }}"
