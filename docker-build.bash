@@ -8,6 +8,7 @@ traperr() {
 set -o errtrace
 trap traperr ERR
 
+# shellcheck disable=SC1091
 source ./env.bash
 
 validate_env () {
@@ -68,26 +69,28 @@ build() {
 
 build_docker_images () {
 
-  build base/alpine "${REGISTRY}/$PROJECT_ID"/alpine:base
-  build base/centos "${REGISTRY}/$PROJECT_ID"/centos:base
-  build base/debian "${REGISTRY}/$PROJECT_ID"/debian:bullseye-slim
-  build haproxy/alpine "${REGISTRY}/$PROJECT_ID"/haproxy:latest
-  build buildah/debian "${REGISTRY}/$PROJECT_ID"/buildah:bullseye-slim
-  build python/alpine "${REGISTRY}/$PROJECT_ID"/python3:alpine
-  build venv-builder/centos "${REGISTRY}/$PROJECT_ID"/venv-builder:latest
-  build molecule/alpine "${REGISTRY}/$PROJECT_ID"/molecule:latest
+  # build base/alpine "${REGISTRY}/$PROJECT_ID"/alpine:base
+  # build base/centos "${REGISTRY}/$PROJECT_ID"/centos:base
+  # build base/debian "${REGISTRY}/$PROJECT_ID"/debian:bullseye-slim
+  # build haproxy/alpine "${REGISTRY}/$PROJECT_ID"/haproxy:latest
+  # build buildah/debian "${REGISTRY}/$PROJECT_ID"/buildah:bullseye-slim
+  # build python/alpine "${REGISTRY}/$PROJECT_ID"/python3:alpine
+  # build venv-builder/centos "${REGISTRY}/$PROJECT_ID"/venv-builder:latest
+  # build molecule/alpine "${REGISTRY}/$PROJECT_ID"/molecule:latest
+  build gcloud/alpine "${REGISTRY}/$PROJECT_ID"/gcloud:latest
   # configure pushing to private GCR, and push our image
   gcloud auth configure-docker -q
 
   # push all the images
-  docker push "${REGISTRY}/$PROJECT_ID"/alpine:base
-  docker push "${REGISTRY}/$PROJECT_ID"/centos:base
-  docker push "${REGISTRY}/$PROJECT_ID"/debian:bullseye-slim
-  docker push "${REGISTRY}/$PROJECT_ID"/haproxy:latest
-  docker push "${REGISTRY}/$PROJECT_ID"/buildah:bullseye-slim
-  docker push "${REGISTRY}/$PROJECT_ID"/python3:alpine
-  docker push "${REGISTRY}/$PROJECT_ID"/venv-builder:latest
-  docker push "${REGISTRY}/$PROJECT_ID"/molecule:latest
+  # docker push "${REGISTRY}/$PROJECT_ID"/alpine:base
+  # docker push "${REGISTRY}/$PROJECT_ID"/centos:base
+  # docker push "${REGISTRY}/$PROJECT_ID"/debian:bullseye-slim
+  # docker push "${REGISTRY}/$PROJECT_ID"/haproxy:latest
+  # docker push "${REGISTRY}/$PROJECT_ID"/buildah:bullseye-slim
+  # docker push "${REGISTRY}/$PROJECT_ID"/python3:alpine
+  # docker push "${REGISTRY}/$PROJECT_ID"/venv-builder:latest
+  # docker push "${REGISTRY}/$PROJECT_ID"/molecule:latest
+  docker push "${REGISTRY}/$PROJECT_ID"/gcloud:latest
 }
 
 init() {
@@ -103,11 +106,8 @@ init() {
 }
 
 report () {
-	cat >&2 <<-'EOF'
-
-All the containers image are now up to date.
-
-	EOF
+  echo "[OK] All the containers image are now up to date."
+  exit 0
 }
 
 init && report

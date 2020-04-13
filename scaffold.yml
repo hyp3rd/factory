@@ -11,7 +11,7 @@
     oci_vedor: "F."
     oci_base_image: "alpine"
     oci_base_tag: "latest"
-    oci_image_name: "molecule"
+    oci_image_name: "gcloud"
     oci_image_layout_path: ./skel/container-image-baselayout
     oci_base_image_conf_base: ./skel/conf-base
     oci_base_image_conf_image: ./skel/conf-image
