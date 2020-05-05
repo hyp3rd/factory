@@ -1,11 +1,10 @@
-FROM alpine:3.11.5
+FROM docker:dind
 
 COPY container-image-baselayout/usr/local/bin/ /usr/local/bin/
 COPY conf/ /opt/container/
 COPY container-image-baselayout/etc/profile /etc/profile
 
 ENV ENV="/etc/profile" \
-    DOCKER_CONF_HOME=/opt \
     TERM="xterm" \
     LANG="C.UTF-8" \
     LC_ALL="C.UTF-8" \
@@ -15,12 +14,14 @@ ENV ENV="/etc/profile" \
     APPLICATION_GID=1000 \
     CLOUDSDK_PYTHON=python3
 
-RUN apk-install python3 \
+RUN apk-upgrade \
+    && apk-install python3 \
     && wget -O gcloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-288.0.0-linux-x86_64.tar.gz \
     && tar xzfv gcloud-sdk.tar.gz \
+    && rm -rf gcloud-sdk.tar.gz \
     && ./google-cloud-sdk/install.sh --quiet --path-update true \
     && ./google-cloud-sdk/bin/gcloud components install kubectl --quiet \
-    && gcloud config set disable_usage_reporting false \
+    && ./google-cloud-sdk/bin/gcloud config set disable_usage_reporting false \
     && chmod +x /usr/local/bin/* \
     && chmod +x /opt/container/bin/* \
     /opt/container/provision/bootstrap.d/10-user-application.sh \

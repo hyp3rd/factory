@@ -28,9 +28,9 @@ RUN set -x \
     && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python3 get-pip.py \
     && rm -rf get-pip.py \
-    && python3 -m pip install venvctl==1.3.16 psutil==5.7.0 \
+    && python3 -m pip install venvctl==1.3.19 psutil==5.7.0 \
     && python2 -m pip install --upgrade pip==20.0.2 \
-    && python2 -m pip install virtualenv==20.0.15 \
+    && python2 -m pip install virtualenv==20.0.20 \
     && docker-run-bootstrap \
     && docker-image-cleanup
 
